@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
+from keras.layers.normalization import BatchNormalization
 
 num_classes = 10
 
@@ -12,9 +13,11 @@ def create_cnn_model(input_shape):
     model.add(Convolution2D(64, 3, 3, activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
+    model.add(BatchNormalization())
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
     model.add(Dropout(0.5))
+    model.add(BatchNormalization())
     model.add(Dense(num_classes, activation='softmax'))
 
     model.compile(loss='categorical_crossentropy',
